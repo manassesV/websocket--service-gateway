@@ -9,10 +9,13 @@ class OnConnect{
         const putParams = {
             TableName: process.env.CONNECTIONS_WEBSOCKET_TABLE,
             Item: {
-                connectionId: event.requestContext.connectionId
+                connectionId: event.requestContext.connectionId,
+                phone: event.queryStringParameters?.phone
 
             }
         };
+
+        console.log(`PUT_PARAMS: ${putParams}`);
 
         try {
             await this.repository.put(putParams).promise();

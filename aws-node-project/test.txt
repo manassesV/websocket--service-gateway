@@ -1,1 +1,1 @@
-{"action": "onMessage", "data" : {"text" : "Hello Manassés"}}
+{"action": "onMessage", "data" : {"text" : "Hello Manassés", "phone": "11997357888"}}

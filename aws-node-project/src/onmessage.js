@@ -10,7 +10,11 @@ class OnMessage {
 
     async handle(event) {
         try {
-            let connectionData = await this.findConnections();
+            let data = JSON.parse(event.body).data;
+            console.log(data);
+
+            let connectionData = await this.findConnections(data);
+            console.log(connectionData);
             const postCalls = this.postMessages(event, connectionData.Items);
             await Promise.all(postCalls);
 
@@ -24,11 +28,19 @@ class OnMessage {
         return { statusCode: 200 }
     }
 
-    async findConnections() {
+    async findConnections(data) {
         return this.repository.
             scan({
                 TableName: CONNECTIONS_WEBSOCKET_TABLE,
-                ProjectionExpression: 'connectionId'
+                FilterExpression: "#ph = :phone",
+                ExpressionAttributeNames: {
+                    "#ph": "phone",
+                },
+
+                ExpressionAttributeValues: {
+                    ":phone": data.phone,
+                }
+               
             }).promise();
     }
 
@@ -38,11 +50,17 @@ class OnMessage {
 
         });
 
-        const message = JSON.stringify(JSON.parse(event.body).data);
+        let message = JSON.stringify(JSON.parse(event.body).data);
+
+        
+
 
         return items
             .map(async ({ connectionId }) => {
                 try {
+
+                    console.log(`map | connectionId: ${connectionId} `);
+
                     await apigwManagementApi.postToConnection({
                         ConnectionId: connectionId,
                         Data: message
