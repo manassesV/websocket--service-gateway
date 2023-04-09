@@ -1,2 +1,4 @@
 ENV: "test"
 CONNECTIONS_WEBSOCKET_TABLE: "ConnectionsWebSockettest"
+NODE_PATH: "./:/opt/node_modules"
+

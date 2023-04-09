@@ -1,2 +1,4 @@
 ENV: "dev"
 CONNECTIONS_WEBSOCKET_TABLE: "ConnectionsWebSocketdev"
+NODE_PATH: "./:/opt/node_modules"
+

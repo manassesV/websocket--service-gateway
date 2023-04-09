@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-class {
+class OnConnect{
     constructor({ repository }) {
         this.repository = repository;
     }
@@ -33,6 +33,6 @@ class {
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 const onConnect = new OnConnect({ repository: ddb });
-module.export.handle = onConnect.handle.bind(onConnect);
+module.exports.handle = onConnect.handle.bind(onConnect);
 
 

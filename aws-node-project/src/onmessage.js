@@ -40,25 +40,26 @@ class OnMessage {
 
         const message = JSON.stringify(JSON.parse(event.body).data);
 
-        return items.map(async({ connectionId })) => {
-            try {
-                await apigwManagementApi.postToConnection({
-                    ConnectionId: connectionId,
-                    Data: message
-                }).promise();
+        return items
+            .map(async ({ connectionId }) => {
+                try {
+                    await apigwManagementApi.postToConnection({
+                        ConnectionId: connectionId,
+                        Data: message
+                    }).promise();
 
-            } catch (e) {
-                if (err.statusCode === 410) {
-                    console.log(`Found stale connection, deleting ${connectionId}`);
-                    await this.repository.delete({ TableName: CONNECTIONS_WEBSOCKET_TABLE, Key: { connectionId } }).promise();
-                } else {
-                    throw err;
+                } catch (e) {
+                    if (err.statusCode === 410) {
+                        console.log(`Found stale connection, deleting ${connectionId}`);
+                        await this.repository.delete({ TableName: CONNECTIONS_WEBSOCKET_TABLE, Key: { connectionId } }).promise();
+                    } else {
+                        throw err;
+                    }
                 }
-            }
-        }
+            });
     }
 }
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 const onMessage = new OnMessage({ repository: ddb });
-module.export.handle = onMessage.handle.bind(onMessage);
+module.exports.handle = onMessage.handle.bind(onMessage);

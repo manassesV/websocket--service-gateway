@@ -5,7 +5,8 @@ events:
 package:
    patterns:
       - ./src/ondisconnect.js
-
+layers:
+   - {Ref: AWSSDKDependenciesNodeModuleLambdaLayer}
 iamRoleStatements:
    - Effect: Allow
      Action:

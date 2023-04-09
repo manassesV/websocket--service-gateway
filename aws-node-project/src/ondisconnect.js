@@ -31,6 +31,6 @@ class OnDisconnect {
     }
 }
 
-const ddb = new AWS.DynamDB.DocumentClient();
+const ddb = new AWS.DynamoDB.DocumentClient();
 const onDisconnect = new OnDisconnect({ repository: ddb });
-module.export.handle = onDisconnect.handle.bind(onDisconnect);
+module.exports.handle = onDisconnect.handle.bind(onDisconnect);

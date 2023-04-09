@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\config",
+    "\\deploy",
+    "\\deploy\\functions",
+    "\\deploy\\resources",
+    "\\layer",
+    "\\src"
+  ],
+  "SelectedNode": "\\layer\\nodejs",
+  "PreviewInSolutionExplorer": false
+}

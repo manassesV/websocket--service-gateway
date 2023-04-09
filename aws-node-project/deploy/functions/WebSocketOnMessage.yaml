@@ -5,17 +5,19 @@ events:
 package:
     patterns:
        - ./src/onmessage.js
+layers:
+   - {Ref: AWSSDKDependenciesNodeModuleLambdaLayer}
 iamRoleStatements:
   - Effect: Allow
     Action: 
        - dynamodb:Scan
     Resource:
-       - Fn::GetAtt [ConnectionsWebsocketTable, Arn]
+       - Fn::GetAtt: [ConnectionsWebsocketTable, Arn]
   - Effect: Allow
     Action: 
        - execute-api:Invoke
        - execute-api:ManageConnections
     Resource:
-       Fn:sub:
-           - "arn:aws:execute-api:${Region}:${AccountId}:${WebSocketId}/*"
-           - { Region: !Ref AWS::Region, AccountId: !Ref AWS::AccountId, WebSocketId: !Ref WebsocketsApi }
+        Fn::Sub:
+        - "arn:aws:execute-api:${Region}:${AccountId}:${WebSocketId}/*"
+        - { Region: !Ref AWS::Region, AccountId: !Ref AWS::AccountId, WebSocketId: !Ref WebsocketsApi } 

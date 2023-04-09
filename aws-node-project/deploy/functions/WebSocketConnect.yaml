@@ -5,10 +5,11 @@ events:
 package:
    patterns:
       - ./src/onconnect.js
-
+layers:
+   - {Ref: AWSSDKDependenciesNodeModuleLambdaLayer}
 iamRoleStatements:
    - Effect: Allow
      Action:
-       - dynamodb: PutItem
+       - dynamodb:PutItem
      Resource:
        - Fn::GetAtt: [ConnectionsWebsocketTable, Arn]
